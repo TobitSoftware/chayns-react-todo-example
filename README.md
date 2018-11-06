@@ -1,3 +1,6 @@
+[![license](https://img.shields.io/github/license/TobitSoftware/chayns-react-todo-example.svg)]() [![GitHub pull requests](https://img.shields.io/github/issues-pr/TobitSoftware/chayns-react-todo-example.svg)]() [![](https://img.shields.io/github/issues-pr-closed-raw/TobitSoftware/chayns-react-todo-example.svg)]()
+
+
 chayns® React example
 ===================
 This project is an example for how u can use chayns® + [React][4]. <br>
