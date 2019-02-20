@@ -31,7 +31,7 @@ class Todo extends PureComponent {
                     onChange={this.handleToggleTodoChecked}
                 />
                 <Icon className="todo__delete-icon" icon={faTrash} onClick={this.handleRemoveTodo}/>
-                <div>{todo.get('description')}</div>
+                <div>{todo.get('todo')}</div>
             </div>
         );
     }
