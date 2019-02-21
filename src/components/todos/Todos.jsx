@@ -3,6 +3,7 @@ import { List, fromJS } from 'immutable';
 import Todo from './todo/Todo';
 import AddTodo from '../add-todo/AddTodo';
 import getTodosFromLocalStorage from '../../api/get/todos';
+import LOCALSTORAGE_KEY from '../../constants/localstorage';
 
 // We use PureComponent instead of Component because it handles the shouldComponentUpdate method for us.
 // If we want to define our own shouldComponentUpdate logic we have to use Component instead of PureComponent.
@@ -15,7 +16,7 @@ class Todos extends PureComponent {
             todos: List(fromJS(getTodosFromLocalStorage()))
         };
     }
-
+c
     addTodo = (todo) => {
         const { todos } = this.state;
 
@@ -53,7 +54,7 @@ class Todos extends PureComponent {
         });
 
         // We update our localstorage data
-        localStorage.setItem('todos', JSON.stringify(nextTodos.toJS()));
+        localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(nextTodos.toJS()));
     };
 
     // We extract the complex logic to render the headline for a more readable render()
