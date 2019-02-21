@@ -35,7 +35,11 @@ class AddTodo extends PureComponent {
         // We call addTodo from our props and add an id to our data.
         // Normally we use a real id instead of a random number.
         if (newTodo.get('todo').length > 0) {
-            addTodo(newTodo.set('id', Math.random()));
+            addTodo(
+                newTodo
+                    .set('id', Math.random())
+                    .set('creationTime', Date.now())
+            );
         }
 
         // We reset the state to our initial value
