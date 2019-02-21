@@ -47,7 +47,7 @@
     "@fortawesome/free-brands-svg-icons": "^5.5.0",
     "@fortawesome/free-regular-svg-icons": "^5.5.0",
     "@fortawesome/free-solid-svg-icons": "^5.5.0",
-    "chayns-components": "^4.1.5",
+    "chayns-components": "^4.4.2",
     "immutable": "^3.8.2",
     "react": "^16.6.0",
     "react-dom": "^16.6.0"
