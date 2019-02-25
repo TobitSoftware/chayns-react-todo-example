@@ -18,6 +18,12 @@
     "transform-runtime",
     "transform-decorators-legacy",
     "transform-class-properties",
-    "react-hot-loader/babel"
+    "react-hot-loader/babel",
+    ["transform-imports", {
+      "chayns-components": {
+        "transform": "../chayns-components/lib/utils/babel/resolveAbsoluteImport.js",
+        "preventFullImport": true
+      }
+    }]
   ]
 }

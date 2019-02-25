@@ -1,8 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Map } from 'immutable';
 import PropTypes from 'prop-types';
-import Input from 'chayns-components/lib/react-chayns-input/component/Input';
-import Button from 'chayns-components/lib/react-chayns-button/component/Button';
+import { Input, Button } from 'chayns-components';
 import './addTodo.scss';
 
 // We use PureComponent instead of Component because it handles the shouldComponentUpdate method for us.
@@ -64,7 +63,7 @@ class AddTodo extends PureComponent {
                     onClick={this.handleAddTodo}
                     disabled={newTodo.get('todo').length <= 0}
                 >
-                    +
+                    {'+'}
                 </Button>
             </div>
         );

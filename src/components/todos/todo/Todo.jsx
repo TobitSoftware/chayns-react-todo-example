@@ -1,9 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Map } from 'immutable';
 import PropTypes from 'prop-types';
-import Checkbox from 'chayns-components/lib/react-chayns-checkbox/component/Checkbox';
-import Icon from 'chayns-components/lib/react-chayns-icon/component/Icon';
-import Tooltip from 'chayns-components/lib/react-chayns-tooltip/component/Tooltip';
+import { Checkbox, Icon, Tooltip } from 'chayns-components';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import formatDateMonthYearHoursMinutes from '../../../utils/date-helper';
 import './todo.scss';
