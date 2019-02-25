@@ -10,6 +10,13 @@
     "__STAGING__": true,
     "__LIVE__": true
   },
+  "settings": {
+    "import/resolver": {
+      "webpack": {
+        "config": "./webpack/prod.babel.js"
+      }
+    }
+  },
   "parser": "babel-eslint",
   "rules": {
     "max-len": "off",
