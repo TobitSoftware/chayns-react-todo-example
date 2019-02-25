@@ -63,7 +63,7 @@ class AddTodo extends PureComponent {
                     onClick={this.handleAddTodo}
                     disabled={newTodo.get('todo').length <= 0}
                 >
-                    +
+                    {'+'}
                 </Button>
             </div>
         );
