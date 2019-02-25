@@ -2,6 +2,8 @@ import path from 'path';
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import AppcacheWebpackPlugin from 'appcache-webpack-plugin';
+import { CHAYNS_CSS_VERSION } from 'chayns-components/lib/constants';
+
 import getBaseConfig from './base-config';
 
 const ROOT_PATH = path.resolve('./');
@@ -11,7 +13,10 @@ export default {
     devtool: 'hidden-source-map',
     plugins: [
         new HtmlWebpackPlugin({
-            template: path.resolve(ROOT_PATH, 'src/index.staging.html')
+            template: path.resolve(ROOT_PATH, 'src/index.staging.html'),
+            templateParameters: {
+                CHAYNS_CSS_VERSION,
+            },
         }),
         new AppcacheWebpackPlugin({
             cache: [

@@ -2,6 +2,8 @@ import path from 'path';
 import fs from 'fs';
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import { CHAYNS_CSS_VERSION } from 'chayns-components/lib/constants';
+
 import getBaseConfig from './base-config';
 
 const ROOT_PATH = path.resolve('./');
@@ -34,7 +36,10 @@ export default {
     devtool: 'inline-source-map',
     plugins: [
         new HtmlWebpackPlugin({
-            template: path.resolve(ROOT_PATH, 'src/index.dev.html')
+            template: path.resolve(ROOT_PATH, 'src/index.dev.html'),
+            templateParameters: {
+                CHAYNS_CSS_VERSION,
+            },
         }),
         new webpack.LoaderOptionsPlugin({
             debug: true
