@@ -1,0 +1,88 @@
+.tapp{
+
+}
+.AppHolder{
+
+}
+.nextButtonHolder{
+  display: flex;
+  justify-content: center;
+}
+
+///////ChildInfo
+.zipCityDiv{
+  display: flex;
+
+  .ZIP{
+    margin-right: 5px;
+    width: 40%;
+  }
+  .city{
+    width: 60%;
+  }
+}
+
+.birthdayChild{
+  display: flex;
+  justify-content: space-between;
+  a{
+    height: 21px;
+  }
+}
+
+
+////////Event
+
+
+
+///////Supervisor
+
+.personFinder{
+  margin: 10px 0 20px;
+}
+
+/////////Summary
+.sigCanvasParent{
+  background-color: rgba(150, 149, 147, 0.2);
+  height: 200px;
+  width: 100%;
+}
+
+.sigCanvasSupervisor{
+  background-color: rgba(150, 149, 147, 0.2);
+  height: 200px;
+  width: 100%;
+}
+
+.summaryNames{
+  text-align: center;
+  font-weight: bold;
+}
+.canvasUnderline{
+  text-align: center;
+}
+
+.summaryCheckbox{
+  margin: 14px 0;
+}
+
+.ankerHolder{
+  display: flex;
+  justify-content: flex-end;
+  .verwerfenAnker{
+
+  }
+}
+.deleteCanvas{
+
+  .deleteCanvasButton{
+    z-index: 10;
+    position: absolute;
+    right: 10px;
+    margin-top: 0 !important;
+    border-radius: 0 !important;
+    opacity: .7;
+    background-color: white !important;
+  }
+}
+
