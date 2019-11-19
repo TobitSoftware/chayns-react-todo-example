@@ -9,90 +9,73 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 import {
- TXT_SUMMARY_1, TXT_SUMMARY_2, TXT_SUMMARY_3, TXT_SUMMARY_4
+ TXT_SUMMARY_1, TXT_SUMMARY_2, TXT_SUMMARY_3, TXT_SUMMARY_4, textStrings
 } from '../../constants/localstorage';
 import { actions } from '../../reducer/reducerConstances';
+import { postPowerOfAttorney } from './fetch';
+
 
 class Summary extends PureComponent {
-    sigCanvasParent = {};
-
-    sigCanvasSupervisor = {};
-
     constructor(props) {
         super(props);
         this.state = {};
     }
 
-    handleDeleteSign = (sigpad) => {
-        sigpad.clear();
-    };
 
-
-    handleSave = () => {
-        const { parent, supervisor, store } = this.props;
-        const picP = this.sigCanvasParent.getCanvas().toDataURL();
-        const picS = this.sigCanvasSupervisor.getCanvas().toDataURL();
-
-        const data = {
-            parent: picP,
-            supervisor: picS
+    handleSave = async () => {
+        const {
+ child, event, parent, supervisor, confirm
+} = this.props;
+        const obj = {
+            child, parent, supervisor, BoardId: 1, EventId: event.id, EventName: event.name
         };
-
-        store(data);
-    }
+        const res = await postPowerOfAttorney(1, obj);
+        console.log(res);
+        if (res.ok) {
+            confirm();
+        }
+    };
 
     render() {
         const {
             nextStep, stepComplete, store, child, parent, supervisor, event
             } = this.props;
 
+
         return (
             <div className="accordion__content">
-                <p>{TXT_SUMMARY_1}</p>
 
-                <p className="summaryNames">{`${parent.firstName} ${parent.lastName}`}</p>
 
-                <div className="deleteCanvas">
-                    <Button
-                        className="deleteCanvasButton"
-                        onClick={() => this.handleDeleteSign(this.sigCanvasParent)}
-                    >
-                        <FontAwesomeIcon icon={faTimes} color="black" />
-                    </Button>
-                    <SignatureCanvas
-                        penColor="green"
-                        canvasProps={{ className: 'sigCanvasParent' }}
-                        ref={(ref) => { this.sigCanvasParent = ref; }}
-                    />
-                </div>
+                <p className="summaryNames">{`${parent.FirstName} ${parent.LastName}`}</p>
 
-                <p className="canvasUnderline">(Unterschrift des Erziehungsberechtigten)</p>
 
                 <p>{TXT_SUMMARY_2}</p>
 
-                <p className="summaryNames">{`${child.firstName} ${child.lastName}`}</p>
+                <p className="summaryNames">{`${child.FirstName} ${child.LastName}`}</p>
 
                 <p>{`${TXT_SUMMARY_3} \"${event.name}\"`}</p>
 
                 <p>{TXT_SUMMARY_4}</p>
 
-                <p className="summaryNames">{`${supervisor.firstName} ${supervisor.lastName}`}</p>
-
-                <div className="deleteCanvas">
-                    <Button className="deleteCanvasButton" onClick={() => this.handleDeleteSign(this.sigCanvasSupervisor)}><FontAwesomeIcon icon={faTimes} color="black" /></Button>
-                    <SignatureCanvas
-                        penColor="green"
-                        canvasProps={{ className: 'sigCanvasSupervisor' }}
-                        ref={(ref) => { this.sigCanvasSupervisor = ref; }}
-                    />
-                </div>
-
-                <p className="canvasUnderline">(Unterschrift der Aufsichtsperson)</p>
+                <p className="summaryNames">{`${supervisor.FirstName} ${supervisor.LastName}`}</p>
 
                 <Accordion
                 head="Belehrung"
-                />
+                >
+                    <p>{textStrings.summaryInstruction1}</p>
+                    <p>{textStrings.summaryInstruction2}</p>
+                    <p>{textStrings.summaryInstruction3}</p>
+                    <p>{textStrings.summaryInstruction4}</p>
+                    <p>{textStrings.summaryInstruction5}</p>
+                </Accordion>
                 <Checkbox className="summaryCheckbox" label="Ich habe die Belehrung verstanden."/>
+
+                <div className="imgHolder">
+                    <img className="signP" src={parent.Signature}/>
+                    <img className="signS" src={supervisor.Signature}/>
+                </div>
+
+
                 <div className="nextButtonHolder">
                     <Button onClick={this.handleSave}>Erstellen</Button>
                 </div>
@@ -121,7 +104,7 @@ const mapStateToProps = ({ eventReducer }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    store: data => dispatch({ type: actions.ADDCONFIRM, data })
+    confirm: dispatch({ type: actions.ADDCONFIRM })
 });
 
 

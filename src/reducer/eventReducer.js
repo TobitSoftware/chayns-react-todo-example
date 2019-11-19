@@ -2,6 +2,7 @@ import produce from 'immer';
 import { actions } from './reducerConstances';
 
 const initialState = {
+    boardId: 0,
     event: {
 
     },
@@ -19,9 +20,12 @@ const initialState = {
 export default (state = initialState, action) => (
     produce(state, (draft) => {
         switch (action.type) {
+            case actions.ADDBOARD: {
+                draft.boardId = action.data;
+                return draft;
+            }
             case actions.ADDCHILD: {
                 draft.child = action.data;
-                console.log('reducer', action.data);
                 return draft;
             }
             case actions.ADDEVENT: {
@@ -37,8 +41,15 @@ export default (state = initialState, action) => (
                 return draft;
             }
             case actions.ADDCONFIRM: {
-                draft.parent.sign = action.data.parent;
-                draft.supervisor.sign = action.data.supervisor;
+                draft = initialState;
+                return draft;
+            }
+            case actions.REMOVEPARENTSIGN: {
+                draft.parent.sign = '';
+                return draft;
+            }
+            case actions.REMOVESUPERVISORSIGN: {
+                draft.supervisor.sign = '';
                 return draft;
             }
             default: {

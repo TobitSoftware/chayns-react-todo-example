@@ -61,17 +61,17 @@ async function init() {
                 // eslint-disable-next-line no-nested-ternary
                 device: chayns.env.isIOS ? 'IOS' : chayns.env.isAndroid ? 'Android' : 'other'
             },
-            middleware: (payload) => {
-                if (payload.level === logger.levels.ERROR) {
-                    const stringData = JSON.stringify(payload);
-                    if (warningMessages.find(message => stringData.includes(message))) {
-                        // eslint-disable-next-line no-param-reassign
-                        payload.level = logger.levels.WARNING;
-                    }
-                }
-
-                return true;
-            }
+            // middleware: (payload) => {
+            //     if (payload.level === logger.levels.ERROR) {
+            //         const stringData = JSON.stringify(payload);
+            //         if (warningMessages.find(message => stringData.includes(message))) {
+            //             // eslint-disable-next-line no-param-reassign
+            //             payload.level = logger.levels.WARNING;
+            //         }
+            //     }
+            //
+            //     return true;
+            // }
         });
         // Render App
 

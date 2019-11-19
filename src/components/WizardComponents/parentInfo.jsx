@@ -2,31 +2,87 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Button, withSetupWizardContext, Input } from 'chayns-components';
 import { connect } from 'react-redux';
+import SignatureCanvas from 'react-signature-canvas';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { actions } from '../../reducer/reducerConstances';
 
+
 class ParentInfo extends PureComponent {
+    sigCanvasParent = {};
+
     constructor(props) {
         super(props);
         this.state = {
-            firstName: '',
-            lastName: '',
-            street: '',
-            city: '',
+            FirstName: '',
+            LastName: '',
+            Street: '',
+            City: '',
             ZIP: '',
-            phonenumber: '',
-
+            MobilePhone: '',
+            firstStored: false,
+            Signature: ''
         };
     }
+
 
     inputOnChange = (name, value) => {
         this.setState({ [name]: value });
     };
 
-    render() {
-        const { nextStep, stepComplete, store } = this.props;
+    handleDeleteSign = (sigpad) => {
+        sigpad.clear();
+    };
+
+    handleStore = () => {
+        if (this.sigCanvasParent.isEmpty()) {
+            return;
+        }
+
+
+        const { store } = this.props;
+
+        const obj = {};
         const {
-            firstName, lastName, street, city, ZIP, phonenumber
+            FirstName, LastName, Street, City, ZIP, MobilePhone
+            } = this.state;
+        obj.FirstName = FirstName;
+        obj.LastName = LastName;
+        obj.Street = Street;
+        obj.City = City;
+        obj.ZIP = ZIP;
+        obj.MobilePhone = MobilePhone;
+        // Check wether the sign is set...
+        obj.Signature = this.sigCanvasParent.getCanvas().toDataURL();
+
+        // this.setState({ firstStored: true });
+        store(obj);
+    };
+
+    render() {
+        const { nextStep, stepComplete } = this.props;
+        const {
+            FirstName, LastName, Street, City, ZIP, MobilePhone
         } = this.state;
+
+
+        const sigPadComponent = (
+            <div className="deleteCanvas">
+
+                <Button
+                    className="deleteCanvasButton"
+                    onClick={() => this.handleDeleteSign(this.sigCanvasParent)}
+                >
+                    <FontAwesomeIcon icon={faTimes} color="black" />
+                </Button>
+                <SignatureCanvas
+                    penColor="green"
+                    canvasProps={{ className: 'sigCanvasParent' }}
+                    ref={(ref) => { this.sigCanvasParent = ref; }}
+
+                />
+            </div>
+        );
 
         return (
 
@@ -34,26 +90,26 @@ class ParentInfo extends PureComponent {
                 <Input
                     placeholder="Vorname"
                     dynamic
-                    value={firstName}
-                    onChange={value => this.inputOnChange('firstName', value)}
+                    value={FirstName}
+                    onChange={value => this.inputOnChange('FirstName', value)}
                     style={{ marginBottom: '10px' }}
-                    invalid={firstName === ''}
+                    invalid={FirstName === ''}
                 />
                 <Input
                     placeholder="Nachname"
                     dynamic
-                    value={lastName}
-                    onChange={value => this.inputOnChange('lastName', value)}
+                    value={LastName}
+                    onChange={value => this.inputOnChange('LastName', value)}
                     style={{ marginBottom: '10px' }}
-                    invalid={lastName === ''}
+                    invalid={LastName === ''}
                 />
                 <Input
                     placeholder="Straße/ Nr."
                     dynamic
-                    value={street}
-                    onChange={value => this.inputOnChange('street', value)}
+                    value={Street}
+                    onChange={value => this.inputOnChange('Street', value)}
                     style={{ marginBottom: '10px' }}
-                    invalid={street === ''}
+                    invalid={Street === ''}
                 />
                 <div className="zipCityDiv">
                     <Input
@@ -69,27 +125,29 @@ class ParentInfo extends PureComponent {
                         className="city"
                         placeholder="Wohnort"
                         dynamic
-                        value={city}
-                        onChange={value => this.inputOnChange('city', value)}
+                        value={City}
+                        onChange={value => this.inputOnChange('City', value)}
                         style={{ marginBottom: '10px' }}
-                        invalid={city === ''}
+                        invalid={City === ''}
                     />
                 </div>
                 <Input
                     placeholder="Handynummer"
                     dynamic
-                    value={phonenumber}
-                    onChange={value => this.inputOnChange('phonenumber', value)}
+                    value={MobilePhone}
+                    onChange={value => this.inputOnChange('MobilePhone', value)}
                     style={{ marginBottom: '10px' }}
-                    invalid={phonenumber === ''}
+                    invalid={MobilePhone === ''}
                 />
+                {sigPadComponent}
                 <div className="nextButtonHolder">
                     <Button onClick={async () => {
-                        await stepComplete(firstName !== '' && lastName !== '' && street !== '' && city !== '' && ZIP !== '' && phonenumber !== '');
-                        store(this.state);
+                        await stepComplete(FirstName !== '' && LastName !== '' && Street !== '' && City !== '' && ZIP !== '' && MobilePhone !== '');
+                        this.handleStore();
                         nextStep();
                     }}
                     >
+
 
                         Weiter
                     </Button>
@@ -98,12 +156,19 @@ class ParentInfo extends PureComponent {
         );
     }
 }
+ParentInfo.propTypes = {
+    nextStep: PropTypes.func.isRequired,
+    stepComplete: PropTypes.func.isRequired,
+    parent: PropTypes.object.isRequired
+};
+
 const mapStateToProps = ({ eventReducer }) => ({
     parent: eventReducer.parent
 });
 
 const mapDispatchToProps = dispatch => ({
-    store: data => dispatch({ type: actions.ADDPARENT, data })
+    store: data => dispatch({ type: actions.ADDPARENT, data }),
+    rempoveSign: () => dispatch({ type: actions.REMOVEPARENTSIGN })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withSetupWizardContext(ParentInfo));

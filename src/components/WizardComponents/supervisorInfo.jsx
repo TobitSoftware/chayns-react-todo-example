@@ -4,23 +4,28 @@ import {
  Button, withSetupWizardContext, SelectList, SelectListItem, Input, PersonFinder
 } from 'chayns-components';
 import { connect } from 'react-redux';
+import SignatureCanvas from 'react-signature-canvas';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { getChaynsDateString, getNowbefore18 } from '../helper';
 import { getDetailUserData } from './fetch';
 import { actions } from '../../reducer/reducerConstances';
 
 class SupervisorInfo extends PureComponent {
+    sigCanvasSupervisor = {};
+
     constructor(props) {
         super(props);
         this.state = {
             withAccount: -1,
-            firstName: '',
-            lastName: '',
-            street: '',
-            city: '',
+            FirstName: '',
+            LastName: '',
+            Street: '',
+            City: '',
             ZIP: '',
-            birthdate: '',
-            phonenumber: '',
-            personId: ''
+            Birthdate: '',
+            MobilePhone: '',
+            PersonId: ''
 
         };
     }
@@ -28,7 +33,6 @@ class SupervisorInfo extends PureComponent {
     personFinder = React.createRef();
 
     handleInputMethod = (id) => {
-        console.log(id);
         this.setState({ withAccount: id });
     };
 
@@ -45,7 +49,7 @@ class SupervisorInfo extends PureComponent {
             preSelect: getNowbefore18()
         }).then((data) => {
             if (data !== -1) {
-                this.setState({ birthdate: data * 1000 });
+                this.setState({ Birthdate: data * 1000 });
             }
         });
     }
@@ -56,15 +60,35 @@ class SupervisorInfo extends PureComponent {
         }
         console.log('personInput', user);
         const { firstName, lastName, personId } = user;
-        this.setState({ firstName, lastName, personId: personId });
+        this.setState({ FirstName: firstName, LastName: lastName, PersonId: personId, withAccount: 2 });
         this.personFinder.current.clear();
+    };
+
+    handleDeleteSign = (sigpad) => {
+        sigpad.clear();
+    };
+
+    handleStore = () => {
+        const { store } = this.props;
+        const { FirstName, LastName, City, Street, ZIP, Birthdate, MobilePhone, PersonId } = this.state;
+        const obj = {};
+        obj.FirstName = FirstName;
+        obj.LastName = LastName;
+        obj.Street = Street;
+        obj.City = City;
+        obj.ZIP = ZIP;
+        obj.Birthdate = Birthdate;
+        obj.MobilePhone = MobilePhone;
+        obj.PersonId = PersonId;
+        obj.Signature = this.sigCanvasSupervisor.getCanvas().toDataURL();
+        store(obj);
     };
 
 
     render() {
-        const { nextStep, stepComplete, store } = this.props;
+        const { nextStep, stepComplete } = this.props;
         const {
-            firstName, lastName, street, city, ZIP, phonenumber, birthdate
+            FirstName, LastName, Street, City, ZIP, MobilePhone, Birthdate
         } = this.state;
 
 
@@ -73,26 +97,26 @@ class SupervisorInfo extends PureComponent {
                 <Input
                     placeholder="Vorname"
                     dynamic
-                    value={firstName}
-                    onChange={value => this.inputOnChange('firstName', value)}
+                    value={FirstName}
+                    onChange={value => this.inputOnChange('FirstName', value)}
                     style={{ marginBottom: '10px' }}
-                    invalid={firstName === ''}
+                    invalid={FirstName === ''}
                 />
                 <Input
                     placeholder="Nachname"
                     dynamic
-                    value={lastName}
-                    onChange={value => this.inputOnChange('lastName', value)}
+                    value={LastName}
+                    onChange={value => this.inputOnChange('LastName', value)}
                     style={{ marginBottom: '10px' }}
-                    invalid={lastName === ''}
+                    invalid={LastName === ''}
                 />
                 <Input
                     placeholder="Straße/ Nr."
                     dynamic
-                    value={street}
-                    onChange={value => this.inputOnChange('street', value)}
+                    value={Street}
+                    onChange={value => this.inputOnChange('Street', value)}
                     style={{ marginBottom: '10px' }}
-                    invalid={street === ''}
+                    invalid={Street === ''}
                 />
                 <div className="zipCityDiv">
                     <Input
@@ -109,36 +133,43 @@ class SupervisorInfo extends PureComponent {
                         className="city"
                         placeholder="Wohnort"
                         dynamic
-                        value={city}
-                        onChange={value => this.inputOnChange('city', value)}
+                        value={City}
+                        onChange={value => this.inputOnChange('City', value)}
                         style={{ marginBottom: '10px' }}
-                        invalid={city === ''}
+                        invalid={City === ''}
                     />
                 </div>
                 <div className="birthdayChild">
                     <p className="birthdateDate">Geburtstdatum</p>
-                    <a onClick={this.handleNewBirthDate}>{getChaynsDateString(this.state.birthdate)}</a>
+                    <a onClick={this.handleNewBirthDate}>{getChaynsDateString(this.state.Birthdate)}</a>
                 </div>
                 <Input
                     placeholder="Handynummer"
                     dynamic
-                    value={phonenumber}
-                    onChange={value => this.inputOnChange('phonenumber', value)}
+                    value={MobilePhone}
+                    onChange={value => this.inputOnChange('MobilePhone', value)}
                     style={{ marginBottom: '10px' }}
-                    invalid={phonenumber === ''}
+                    invalid={MobilePhone === ''}
                 />
+                <div className="deleteCanvas">
+                    <Button className="deleteCanvasButton" onClick={() => this.handleDeleteSign(this.sigCanvasSupervisor)}><FontAwesomeIcon icon={faTimes} color="black" /></Button>
+                    <SignatureCanvas
+                        penColor="green"
+                        canvasProps={{ className: 'sigCanvasSupervisor' }}
+                        ref={(ref) => { this.sigCanvasSupervisor = ref; }}
+                    />
+                </div>
              </div>),
             (<div>
-                <PersonFinder ref={this.personFinder} className="personFinder" placeholder="finden" onChange={this.handlePersonInput}/>
-                <p>{`${firstName} ${lastName}`}</p>
+                <p className="namePtag">{`${FirstName} ${LastName}`}</p>
 
                 <Input
                     placeholder="Straße/ Nr."
                     dynamic
-                    value={street}
-                    onChange={value => this.inputOnChange('street', value)}
+                    value={Street}
+                    onChange={value => this.inputOnChange('Street', value)}
                     style={{ marginBottom: '10px' }}
-                    invalid={street === ''}
+                    invalid={Street === ''}
                 />
                 <div className="zipCityDiv">
                     <Input
@@ -155,46 +186,63 @@ class SupervisorInfo extends PureComponent {
                         className="city"
                         placeholder="Wohnort"
                         dynamic
-                        value={city}
-                        onChange={value => this.inputOnChange('city', value)}
+                        value={City}
+                        onChange={value => this.inputOnChange('City', value)}
                         style={{ marginBottom: '10px' }}
-                        invalid={city === ''}
+                        invalid={City === ''}
                     />
                 </div>
                 <div className="birthdayChild">
                     <p className="birthdateDate">Geburtstdatum</p>
-                    <a onClick={this.handleNewBirthDate}>{getChaynsDateString(this.state.birthdate)}</a>
+                    <a onClick={this.handleNewBirthDate}>{getChaynsDateString(this.state.Birthdate)}</a>
                 </div>
                 <Input
                     placeholder="Handynummer"
                     dynamic
-                    value={phonenumber}
-                    onChange={value => this.inputOnChange('phonenumber', value)}
+                    value={MobilePhone}
+                    onChange={value => this.inputOnChange('MobilePhone', value)}
                     style={{ marginBottom: '10px' }}
-                    invalid={phonenumber === ''}
+                    invalid={MobilePhone === ''}
                 />
-             </div>)
+                <div className="deleteCanvas">
+                    <Button className="deleteCanvasButton" onClick={() => this.handleDeleteSign(this.sigCanvasSupervisor)}><FontAwesomeIcon icon={faTimes} color="black" /></Button>
+                    <SignatureCanvas
+                        penColor="green"
+                        canvasProps={{ className: 'sigCanvasSupervisor' }}
+                        ref={(ref) => { this.sigCanvasSupervisor = ref; }}
+                    />
+                </div>
+             </div>),
+            (<div>
+                <PersonFinder ref={this.personFinder} className="personFinder" placeholder="Finden" onChange={this.handlePersonInput}/>
+            </div>)
         ];
 
 
         return (
             <div className="accordion__content">
 
-                <SelectList
+                 <SelectList
                     onChange={this.handleInputMethod}
-                    value={0}
-                >
-                    <SelectListItem id={1} name="mit Chayns-Konto"/>
-                    {this.state.withAccount > 0 ? components[1] : null }
-                    <SelectListItem id={0} name="ohne Chayns-Konto"/>
-                    {this.state.withAccount === 0 ? components[0] : null }
-                </SelectList>
+                    value={this.state.withAccount}
+                 >
+                     <div className="radioHolder">
+                         <SelectListItem id={1} name="mit Chayns Konto"/>
+                         {this.state.withAccount === 2 ? components[1] : null}
+                         {this.state.withAccount === 1 ? components[2] : null}
+                         <SelectListItem id={0} name="ohne Chayns Konto"/>
+                         {this.state.withAccount === 0 ? components[0] : null}
+                     </div>
+
+                 </SelectList>
+
+
 
 
                 <div className="nextButtonHolder">
                     <Button onClick={async () => {
-                        await stepComplete(firstName !== '' && lastName !== '' && street !== '' && city !== '' && ZIP !== '' && phonenumber !== '' && birthdate !== '');
-                        store(this.state);
+                        await stepComplete(FirstName !== '' && LastName !== '' && Street !== '' && City !== '' && ZIP !== '' && MobilePhone !== '' && Birthdate !== '' && !this.sigCanvasSupervisor.isEmpty());
+                        this.handleStore();
                         nextStep();
                     }}
                     >
