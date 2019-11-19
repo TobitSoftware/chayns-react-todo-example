@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Button, withSetupWizardContext, Input } from 'chayns-components';
 import { connect } from 'react-redux';
-import { getUserData, getDetailUserData } from './fetch';
+import { getUserData, getDetailUserData, getBoard } from './fetch';
 import { getChaynsDateString } from '../helper';
 import { actions } from '../../reducer/reducerConstances';
 
@@ -11,36 +11,52 @@ class ChildInfo extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            firstName: chayns.env.user.firstName,
-            lastName: chayns.env.user.lastName,
-            street: '',
-            city: '',
+            FirstName: chayns.env.user.firstName,
+            LastName: chayns.env.user.lastName,
+            personId: chayns.env.user.personId,
+            Street: '',
+            City: '',
             ZIP: '',
-            birthdate: ''
+            Birthdate: ''
         };
     }
 
     componentDidMount() {
         this.handleGetUserData();
-        console.log(this.props.child);
+        this.handleGetBoard();
+    }
+
+    handleGetBoard = async () => {
+        const { setBoard } = this.props;
+        const { personId } = chayns.env.user;
+        const { locationId, tapp } = chayns.env.site;
+
+        console.log(personId, tapp.id, locationId);
+        const res = await getBoard(personId, locationId, tapp.id);
+        if (res.ok) {
+            const j = await res.json();
+            setBoard(j.boardId);
+            return true;
+        }
+        return false;
     }
 
     handleGetUserData = async () => {
         const res = await getUserData();
         const res1 = res[0];
-        const street = res1.Street;
-        const city = res1.City.Name;
+        const { Street } = res1;
+        const City = res1.City.Name;
         const ZIP = res1.City.ZipCode;
 
         const resDetail = await getDetailUserData();
         const birthdateUTC = resDetail.birthDay;
-        const birthdate = getChaynsDateString(birthdateUTC);
+        const Birthdate = getChaynsDateString(birthdateUTC);
 
         this.setState({
-            street,
-            city,
+            Street,
+            City,
             ZIP,
-            birthdate
+            Birthdate
         });
     };
 
@@ -58,7 +74,7 @@ class ChildInfo extends PureComponent {
             nextStep, stepComplete, store
         } = this.props;
         const {
-            firstName, lastName, street, city, ZIP, birthdate
+            FirstName, LastName, Street, City, ZIP, Birthdate
         } = this.state;
         return (
             <div>
@@ -66,26 +82,26 @@ class ChildInfo extends PureComponent {
                     <Input
                         placeholder="Vorname"
                         dynamic
-                        value={firstName}
+                        value={FirstName}
                         onChange={value => this.inputOnChange('firstName', value)}
                         style={{ marginBottom: '10px' }}
-                        invalid={firstName === ''}
+                        invalid={FirstName === ''}
                     />
                     <Input
                         placeholder="Nachname"
                         dynamic
-                        value={lastName}
+                        value={LastName}
                         onChange={value => this.inputOnChange('lastName', value)}
                         style={{ marginBottom: '10px' }}
-                        invalid={lastName === ''}
+                        invalid={LastName === ''}
                     />
                     <Input
                         placeholder="Straße/ Hausnummer"
                         dynamic
-                        value={street}
-                        onChange={value => this.inputOnChange('street', value)}
+                        value={Street}
+                        onChange={value => this.inputOnChange('Street', value)}
                         style={{ marginBottom: '10px' }}
-                        invalid={street === ''}
+                        invalid={Street === ''}
                     />
                     <div className="zipCityDiv">
                         <div className="ZIP">
@@ -102,10 +118,10 @@ class ChildInfo extends PureComponent {
                             <Input
                                 placeholder="Wohnort"
                                 dynamic
-                                value={city}
-                                onChange={value => this.inputOnChange('city', value)}
+                                value={City}
+                                onChange={value => this.inputOnChange('City', value)}
                                 style={{ marginBottom: '10px' }}
-                                invalid={city === ''}
+                                invalid={City === ''}
                             />
                         </div>
                     </div>
@@ -115,12 +131,12 @@ class ChildInfo extends PureComponent {
 
                         <p>Geburtsdatum</p>
                         {/* Put <a> here to edit with Calendar */}
-                        <p>{birthdate}</p>
+                        <p>{Birthdate}</p>
                     </div>
 
                     <div className="nextButtonHolder">
                         <Button onClick={async () => {
-                            await stepComplete(firstName !== '' && lastName !== '' && street !== '' && city !== '' && ZIP !== '' && birthdate !== '');
+                            await stepComplete(FirstName !== '' && LastName !== '' && Street !== '' && City !== '' && ZIP !== '' && Birthdate !== '');
                             this.storeChild();
                             nextStep();
                         }}
@@ -153,12 +169,8 @@ const mapStateToProps = eventReducer => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    store: (data) => {
-        dispatch({
-            type: actions.ADDCHILD,
-            data
-        });
-    }
+    store: (data) => { dispatch({type: actions.ADDCHILD, data }); },
+    setBoard: (boardId) => { dispatch({type: actions.ADDBOARD, data: boardId})}
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withSetupWizardContext(ChildInfo));

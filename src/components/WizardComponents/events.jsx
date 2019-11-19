@@ -23,7 +23,8 @@ class Events extends PureComponent {
 
     handleLoadEvents = async () => {
         const myEvents = [];
-        const events = await getAllEventsFromSite();
+        const events = await getAllEventsFromSite(6);
+
         events.map((i) => {
             myEvents.push({
                 id: i.id,
@@ -57,7 +58,7 @@ class Events extends PureComponent {
                 >
                     {
                         this.state.myEvents.map(i => (
-                           <SelectListItem id={i.id} name={(`${i.startTimestamp} | ${i.name}`)}/>
+                           <SelectListItem id={i.id} name={<div className="slistItem"><p className="first">{i.startTimestamp}</p><p>{i.name}</p></div>}/>
                             ))
                     }
                 </SelectList>

@@ -1,0 +1,36 @@
+body: {
+"Child": {
+"UserId" : "123456"
+"FirstName" : "Child3",
+"LastName" : "Child3",
+"Street" : "ChildStreet",
+"ZIP" : "123456",
+"City" : "ChildCity",
+"Birthdate" : "2002-12-12",
+"PersonId" : "012-12345"
+},
+"Parent" : {
+"FirstName" : "Parent3",
+"LastName" : "Parent3",
+"Street" : "ParentStreet",
+"ZIP" : "654123",
+"City" : "ParentCity",
+"MobilePhone" : "+123",
+"Signature" : "data:image/png;base64,zurheerufhuzhuzhuzhjuhj"
+},
+"Supervisor" : {
+"UserId" : "123456", (optional)
+"FirstName" : "Supervisor3",
+"LastName" : "Supervisor3",
+"Street" : "SupervisorStreet",
+"ZIP" : "142536",
+"City" : "SupervisorCity",
+"Birthdate" : "2000-11-15",
+"MobilePhone" : "+321",
+"Signature" : "data:image/png;base64,uuuiiiiopoooopokml",
+"PersonId" : "012-12345" (optional)
+},
+"BoardId" : "1",
+"EventId" : "3",
+"EventName" : "Party Party"
+}

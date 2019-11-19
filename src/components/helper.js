@@ -20,8 +20,8 @@ export const getSimpleDate = (UTCdate) => {
         return 'Wählen';
     }
     const date = new Date(UTCdate);
-    const day = date.getDate();
-    const month = date.getMonth();
+    const day = `0${date.getDate()}`.slice(-2);
+    const month = `0${date.getMonth()}`.slice(-2);
 
 
     return `${day}. ${month}`;

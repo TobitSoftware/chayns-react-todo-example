@@ -33,6 +33,8 @@ class App extends PureComponent {
         };
     }
 
+
+
     handleWizardReady = () => {
         this.setState({ ready: true });
     }
@@ -55,16 +57,16 @@ class App extends PureComponent {
                         <SetupWizardItem title={TITLE1} step={0} required>
                             <ChildInfo />
                         </SetupWizardItem>
-                        <SetupWizardItem title={TITLE2} step={1}>
+                        <SetupWizardItem title={TITLE2} step={1} required>
                             <Events />
                         </SetupWizardItem>
-                        <SetupWizardItem title={TITLE3} step={2}>
+                        <SetupWizardItem title={TITLE3} step={2} required>
                             <ParentInfo />
                         </SetupWizardItem>
-                        <SetupWizardItem title={TITLE4} step={3}>
+                        <SetupWizardItem title={TITLE4} step={3} required>
                             <SupervisorInfo />
                         </SetupWizardItem>
-                        <SetupWizardItem title={TITLE5} step={4}>
+                        <SetupWizardItem title={TITLE5} step={4} required>
                             <Summary/>
                         </SetupWizardItem>
 

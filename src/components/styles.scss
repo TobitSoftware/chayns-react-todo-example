@@ -4,6 +4,10 @@
 .AppHolder{
 
 }
+
+.accordion__content{
+
+}
 .nextButtonHolder{
   display: flex;
   justify-content: center;
@@ -32,13 +36,34 @@
 
 
 ////////Event
+.slistItem{
+  display: flex;
 
+  p{
+    margin-right: 3px;
+  }
+  .first{
+    width: 50px;
+    text-align: center;
+  }
+}
 
 
 ///////Supervisor
 
 .personFinder{
-  margin: 10px 0 20px;
+  margin: 20px 0 28px;
+}
+.radioHolder{
+
+
+  :nth-child(n){
+
+  }
+
+}
+.namePtag{
+  margin-top: 10px;
 }
 
 /////////Summary
@@ -46,6 +71,7 @@
   background-color: rgba(150, 149, 147, 0.2);
   height: 200px;
   width: 100%;
+  //max-width: 500px;
 }
 
 .sigCanvasSupervisor{
@@ -55,7 +81,7 @@
 }
 
 .summaryNames{
-  text-align: center;
+
   font-weight: bold;
 }
 .canvasUnderline{
@@ -73,7 +99,27 @@
 
   }
 }
+.imgHolder {
+  display: flex;
+  justify-content: space-evenly;
+  img{
+    border: 1px solid rgba(128, 128, 128, 0.44);
+    margin: 0 0 10px 0;
+  }
+
+  .signP {
+  width: 40%;
+  }
+
+  .signS {
+  width: 40%;
+  }
+}
+
+
 .deleteCanvas{
+
+
 
   .deleteCanvasButton{
     z-index: 10;
@@ -84,5 +130,15 @@
     opacity: .7;
     background-color: white !important;
   }
+}
+/////////Parent/Supervisor
+.pChangins{
+  color: red;
+  //z-index: 10;
+  //position: absolute;
+  ////left: 10px;
+  //margin-top: 0 !important;
+  //margin-left: 4px;
+
 }
 
