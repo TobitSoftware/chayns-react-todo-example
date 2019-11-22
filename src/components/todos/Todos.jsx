@@ -37,7 +37,7 @@ class Todos extends PureComponent {
         const { todos } = this.state;
 
         // We define our next state
-        const nextTodos = todos.push(todo);
+        const nextTodos = [...todos, todo];
 
         this.updateTodosInStateAndLs(nextTodos);
     };
