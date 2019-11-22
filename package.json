@@ -1,17 +1,17 @@
 {
-  "name": "chayns-react-example",
+  "name": "chayns-react-todo-example",
   "version": "1.0.0",
-  "description": "chayns® + react example of a simple ToDo-List",
+  "description": "chayns® + react example of a simple todo list",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --hot --config ./webpack/dev.babel.js --mode development --https",
-    "start:http": "webpack-dev-server --config ./webpack/dev.babel.js --mode development",
-    "build": "webpack -p --config ./webpack/prod.babel.js --mode production",
-    "build:staging": "webpack -p --config ./webpack/staging.babel.js --mode development",
+    "start": "webpack-dev-server --progress --config ./webpack/dev.babel.js --https",
+    "start:http": "webpack-dev-server --config ./webpack/dev.babel.js",
+    "build": "webpack -p --config ./webpack/prod.babel.js",
+    "build:staging": "webpack -p --config ./webpack/staging.babel.js",
     "postinstall": "node postinstall.js"
   },
   "author": "Tobit.Software",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "appcache-webpack-plugin": "^1.4.0",
     "autoprefixer": "^9.3.1",
@@ -61,8 +61,7 @@
   },
   "keywords": [
     "chayns",
-    "react",
-    "immutable"
+    "react"
   ],
   "bugs": {
     "url": ""
