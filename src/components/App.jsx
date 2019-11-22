@@ -1,5 +1,7 @@
+import { hot } from 'react-hot-loader/root';
 import React, { PureComponent } from 'react';
-import { hot } from 'react-hot-loader';
+
+// Components
 import Headline from './header/headline/Headline';
 import Intro from './header/intro/Intro';
 import Todos from './todos/Todos';
@@ -9,13 +11,14 @@ import Todos from './todos/Todos';
 class App extends PureComponent {
     render() {
         return (
-            <div className="tapp">
+            <>
                 <Headline headline="chayns® React Todo Example"/>
                 <Intro intro="This is a very simple and basic example of how u can use chayns® and React together."/>
                 <Todos/>
-            </div>
+            </>
         );
     }
 }
 
-export default hot(module)(App);
+export default App;
+export const HotApp = hot(App);
