@@ -1,3 +1,1 @@
-const LOCALSTORAGE_KEY = 'todos';
-
-export default LOCALSTORAGE_KEY;
+export const LOCAL_STORAGE_KEY = 'todos';
