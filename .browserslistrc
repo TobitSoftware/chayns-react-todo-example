@@ -1,0 +1,7 @@
+# Browsers that we support
+
+last 3 versions
+Firefox ESR
+not ie < 10
+not dead
+> 1%
