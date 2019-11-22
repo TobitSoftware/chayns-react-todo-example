@@ -1,8 +1,12 @@
 import React, { PureComponent } from 'react';
-import { Map } from 'immutable';
 import PropTypes from 'prop-types';
+
+// chayns components
+// eslint-disable-next-line import/no-unresolved
 import { Input, Button } from 'chayns-components';
-import './addTodo.scss';
+
+// Styles
+import './add-todo.scss';
 
 // We use PureComponent instead of Component because it handles the shouldComponentUpdate method for us.
 // If we want to define our own shouldComponentUpdate logic we have to use Component instead of PureComponent.
@@ -10,22 +14,13 @@ class AddTodo extends PureComponent {
     constructor(props) {
         super(props);
 
-        // We set the initial state
+        // Set initial state
         this.state = {
-            newTodo: Map({
-                todo: '',
-            })
+            newTodo: { text: '' },
         };
     }
 
-    handleInputChange = (value) => {
-        const { newTodo } = this.state;
-
-        // We set the value of the input in our state
-        this.setState({
-            newTodo: newTodo.set('todo', value)
-        });
-    };
+    handleInputChange = (value) => this.setState({ newTodo: { text: value } });
 
     handleAddTodo = () => {
         const { addTodo } = this.props;
@@ -33,18 +28,16 @@ class AddTodo extends PureComponent {
 
         // We call addTodo from our props and add an id to our data.
         // Normally we use a real id instead of a random number.
-        if (newTodo.get('todo').length > 0) {
-            addTodo(
-                newTodo
-                    .set('id', Math.random())
-                    .set('creationTime', Date.now())
-            );
+        if (newTodo.text.length > 0) {
+            addTodo({
+                ...newTodo,
+                id: Math.random(),
+                creationTime: Date.now(),
+            });
         }
 
         // We reset the state to our initial value
-        this.setState({
-            newTodo: newTodo.set('todo', '')
-        });
+        this.setState({ newTodo: { text: '' } });
     };
 
     render() {
@@ -53,18 +46,19 @@ class AddTodo extends PureComponent {
         return (
             <div className="add-todo">
                 <Input
-                    value={newTodo.get('todo')}
                     onChange={this.handleInputChange}
-                    placeholder="add todo"
                     onEnter={this.handleAddTodo}
+                    placeholder="Add todo"
+                    value={newTodo.text}
                 />
-                <Button
-                    className="add-todo__button"
-                    onClick={this.handleAddTodo}
-                    disabled={newTodo.get('todo').length <= 0}
-                >
-                    {'+'}
-                </Button>
+                <div className="add-todo__button-wrapper">
+                    <Button
+                        disabled={newTodo.text.length <= 0}
+                        onClick={this.handleAddTodo}
+                    >
+                        Add
+                    </Button>
+                </div>
             </div>
         );
     }

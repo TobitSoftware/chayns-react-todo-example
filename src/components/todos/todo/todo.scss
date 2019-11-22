@@ -1,12 +1,9 @@
 .todo {
-  display: flex;
-  cursor: default;
+    align-items: center;
+    cursor: default;
+    display: flex;
 
-  &__delete-icon {
-    cursor: pointer;
-    float: right;
-    align-self: center;
-    margin-left: 10px;
-    margin-right: 10px;
-  }
+    &__delete-icon {
+        margin: 0 10px;
+    }
 }

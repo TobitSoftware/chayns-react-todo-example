@@ -1,9 +1,20 @@
 import React, { PureComponent } from 'react';
-import { Map } from 'immutable';
 import PropTypes from 'prop-types';
+
+// chayns components
+// eslint-disable-next-line import/no-unresolved
 import { Checkbox, Icon, Tooltip } from 'chayns-components';
+
+// Icons
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+
+// Utils
 import formatDateMonthYearHoursMinutes from '../../../utils/date-helper';
+
+// Shapes
+import { TODO_SHAPE } from '../../../constants/shapes';
+
+// Styles
 import './todo.scss';
 
 // We use PureComponent instead of Component because it handles the shouldComponentUpdate method for us.
@@ -12,7 +23,7 @@ class Todo extends PureComponent {
     handleToggleTodoChecked = () => {
         const { todo, toggleTodoChecked } = this.props;
 
-        toggleTodoChecked(todo.get('id'));
+        toggleTodoChecked(todo.id);
     };
 
     handleRemoveTodo = () => {
@@ -27,16 +38,22 @@ class Todo extends PureComponent {
         return (
             <div className="todo">
                 <Checkbox
-                    checked={todo.get('checked')}
                     onChange={this.handleToggleTodoChecked}
+                    checked={todo.checked}
                 />
-                <Icon className="todo__delete-icon" icon={faTrash} onClick={this.handleRemoveTodo}/>
+                <Icon
+                    onClick={this.handleRemoveTodo}
+                    className="todo__delete-icon"
+                    icon={faTrash}
+                />
                 <Tooltip
+                    content={{ text: formatDateMonthYearHoursMinutes(todo.creationTime) }}
                     bindListeners
                     position={3}
-                    content={{ text: formatDateMonthYearHoursMinutes(todo.get('creationTime')) }}
                 >
-                    <div>{todo.get('todo')}</div>
+                    <div>
+                        {todo.text}
+                    </div>
                 </Tooltip>
             </div>
         );
@@ -45,8 +62,8 @@ class Todo extends PureComponent {
 
 // We define the propTypes of our Component
 Todo.propTypes = {
-    todo: PropTypes.instanceOf(Map).isRequired,
     toggleTodoChecked: PropTypes.func.isRequired,
+    todo: PropTypes.shape(TODO_SHAPE).isRequired,
     removeTodo: PropTypes.func.isRequired,
 };
 

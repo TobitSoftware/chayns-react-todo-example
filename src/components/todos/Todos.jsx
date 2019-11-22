@@ -1,9 +1,12 @@
 import React, { PureComponent } from 'react';
-import { List, fromJS } from 'immutable';
-import Todo from './todo/Todo';
+
+// Api functions
+import { getTodosFromLocalStorage, postTodosToLocalStorage } from '../../api/todos';
+
+// Components
+import TodosHeadline from './todos-headline/TodosHeadline';
 import AddTodo from '../add-todo/AddTodo';
-import getTodosFromLocalStorage from '../../api/get/todos';
-import LOCALSTORAGE_KEY from '../../constants/localstorage';
+import Todo from './todo/Todo';
 
 // We use PureComponent instead of Component because it handles the shouldComponentUpdate method for us.
 // If we want to define our own shouldComponentUpdate logic we have to use Component instead of PureComponent.
@@ -13,14 +16,27 @@ class Todos extends PureComponent {
 
         // We set our initial state
         this.state = {
-            todos: List(fromJS(getTodosFromLocalStorage()))
+            todos: [],
         };
     }
-c
+
+    componentDidMount() {
+        this.loadTodos();
+    }
+
+    loadTodos = async () => {
+        const { status, data: todos } = await getTodosFromLocalStorage();
+
+        // Set todos to state if loaded successfully
+        if (status === 200) {
+            this.setState({ todos });
+        }
+    };
+
     addTodo = (todo) => {
         const { todos } = this.state;
 
-        // We definde our next state
+        // We define our next state
         const nextTodos = todos.push(todo);
 
         this.updateTodosInStateAndLs(nextTodos);
@@ -29,8 +45,8 @@ c
     removeTodo = (id) => {
         const { todos } = this.state;
 
-        // We definde our next state
-        const nextTodos = todos.filter(todo => todo.get('id') !== id);
+        // We define our next state
+        const nextTodos = todos.filter((todo) => todo.id !== id);
 
         this.updateTodosInStateAndLs(nextTodos);
     };
@@ -38,57 +54,45 @@ c
     toggleTodoChecked = (id) => {
         const { todos } = this.state;
 
-        // We definde our next state
-        const nextTodos = todos.update(
-            todos.findIndex(todo => todo.get('id') === id),
-            todo => todo.set('checked', !todo.get('checked'))
-        );
+        // We define our next state
+        const nextTodos = todos.map((todo) => {
+            if (todo.id === id) {
+                // eslint-disable-next-line no-param-reassign
+                todo.checked = !todo.checked;
+            }
+
+            return todo;
+        });
 
         this.updateTodosInStateAndLs(nextTodos);
     };
 
     updateTodosInStateAndLs = (nextTodos) => {
         // We set the next state
-        this.setState({
-            todos: nextTodos
-        });
+        this.setState({ todos: nextTodos });
 
-        // We update our localstorage data
-        localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(nextTodos.toJS()));
-    };
-
-    // We extract the complex logic to render the headline for a more readable render()
-    renderTodosHeadline = () => {
-        const { todos } = this.state;
-
-        const todoCount = todos.size;
-        const checkedTodosCount = todos.filter(todo => todo.get('checked')).size;
-        const headlineString = `
-             ${checkedTodosCount > 0 ? checkedTodosCount : ''}
-             ${checkedTodosCount > 0 && todoCount > 0 ? '/' : ''} 
-             ${todoCount > 0 ? todoCount : ''} ${todoCount === 1 && checkedTodosCount <= 0 ? 'Todo' : 'Todos'} 
-             ${checkedTodosCount > 0 ? 'abgeschlossen' : ''}`;
-
-        return <h2>{headlineString}</h2>;
+        // Update todos in local storage
+        postTodosToLocalStorage(nextTodos);
     };
 
     render() {
         const { todos } = this.state;
 
+        const items = todos.map((todo) => (
+            // We render the component for each entry in todos
+            // We pass the data and functionality as props
+            <Todo
+                toggleTodoChecked={this.toggleTodoChecked}
+                removeTodo={this.removeTodo}
+                key={todo.id}
+                todo={todo}
+            />
+        ));
+
         return (
             <div className="todos">
-                {this.renderTodosHeadline()}
-                {todos.map(todo => (
-
-                    // We render the component for each entry in todos
-                    // We pass the data and functionality as props
-                    <Todo
-                        key={todo.get('id')}
-                        todo={todo}
-                        toggleTodoChecked={this.toggleTodoChecked}
-                        removeTodo={this.removeTodo}
-                    />
-                ))}
+                <TodosHeadline todos={todos}/>
+                {items}
                 <AddTodo addTodo={this.addTodo}/>
             </div>
         );
