@@ -1,33 +1,33 @@
-import path from 'path';
-import webpack from 'webpack';
+import LodashModuleReplacementPlugin from 'lodash-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import AppcacheWebpackPlugin from 'appcache-webpack-plugin';
-import { CHAYNS_CSS_VERSION } from 'chayns-components/lib/constants';
+import TerserPlugin from 'terser-webpack-plugin';
+import webpack from 'webpack';
+import path from 'path';
 
-import getBaseConfig from './base-config';
+import baseConfig from './base-config';
 
 const ROOT_PATH = path.resolve('./');
 
 export default {
-    ...getBaseConfig(false),
+    ...baseConfig(false),
     devtool: 'hidden-source-map',
+    mode: 'production',
+    optimization: {
+        minimizer: [new TerserPlugin({
+            sourceMap: true,
+            parallel: true,
+        })],
+    },
     plugins: [
-        new HtmlWebpackPlugin({
-            template: path.resolve(ROOT_PATH, 'src/index.staging.html'),
-            templateParameters: {
-                CHAYNS_CSS_VERSION,
-            },
-        }),
-        new AppcacheWebpackPlugin({
-            cache: [
-                'https://chayns-res.tobit.com/API/v3.1/js/chayns.min.js'
-            ],
-            output: 'cache.manifest'
-        }),
         new webpack.DefinePlugin({
-            __DEV__: false,
+            __DEVELOPMENT__: false,
             __STAGING__: true,
-            __LIVE__: false,
+            __PRODUCTION__: false,
         }),
-    ]
+        new HtmlWebpackPlugin({
+            template: path.resolve(ROOT_PATH, 'src/index.html'),
+        }),
+        new webpack.optimize.AggressiveMergingPlugin(),
+        new LodashModuleReplacementPlugin(),
+    ],
 };

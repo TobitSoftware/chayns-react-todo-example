@@ -1,29 +1,26 @@
 {
-  "presets": [
-    [
-      "env",
-      {
-        "targets": {
-          "browsers": [
-            "last 3 versions"
-          ]
-        },
-        "modules": false
-      }
-    ],
-    "stage-0",
-    "react"
-  ],
   "plugins": [
-    "transform-runtime",
-    "transform-decorators-legacy",
-    "transform-class-properties",
-    "react-hot-loader/babel",
-    ["transform-imports", {
-      "chayns-components": {
-        "transform": "../chayns-components/lib/utils/babel/resolveAbsoluteImport.js",
-        "preventFullImport": true
-      }
-    }]
-  ]
+    "@babel/plugin-proposal-object-rest-spread",
+    ["@babel/plugin-proposal-decorators", { "legacy": true }],
+    ["@babel/plugin-proposal-class-properties", { "loose" : true }],
+    "@babel/plugin-transform-runtime"
+  ],
+  "presets": [
+    ["@babel/preset-env", { "modules": false }],
+    "@babel/preset-react"
+  ],
+  "env": {
+    "production": {
+      "plugins": [
+        "@babel/plugin-transform-react-constant-elements",
+        "@babel/plugin-transform-react-inline-elements",
+        "transform-react-remove-prop-types"
+      ]
+    },
+    "development": {
+      "plugins": [
+        "react-hot-loader/babel"
+      ]
+    }
+  }
 }
