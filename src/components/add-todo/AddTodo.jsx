@@ -2,8 +2,8 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 // chayns components
-// eslint-disable-next-line import/no-unresolved
-import { Input, Button } from 'chayns-components';
+import Button from 'chayns-components/lib/react-chayns-button/component/Button';
+import Input from 'chayns-components/lib/react-chayns-input/component/Input';
 
 // Styles
 import './add-todo.scss';
