@@ -5,34 +5,51 @@
     "es6": true
   },
   "globals": {
-    "chayns": true,
-    "__DEV__": true,
+    "__DEVELOPMENT__": true,
     "__STAGING__": true,
-    "__LIVE__": true
-  },
-  "settings": {
-    "import/resolver": {
-      "webpack": {
-        "config": "./webpack/prod.babel.js"
-      }
-    }
+    "__PRODUCTION__": true,
+    "chaynsApp": true,
+    "chayns": true
   },
   "parser": "babel-eslint",
   "rules": {
-    "max-len": "off",
+    "function-paren-newline": ["error", "multiline"],
+    "comma-dangle": ["error", "always-multiline"],
+    "arrow-parens": ["error", "always"],
+    "no-param-reassign": ["error", {
+      "props": true,
+      "ignorePropertyModificationsFor": ["draft"]
+    }],
     "linebreak-style": "off",
+    "no-plusplus": "off",
+    "max-len": "off",
     "indent": "off",
-    "strict": 0,
-    "comma-dangle": "off",
+    "strict": "off",
+    "object-curly-newline": ["error", {
+      "ObjectExpression": {
+        "multiline": true,
+        "consistent": true
+      },
+      "ObjectPattern": {
+        "multiline": true,
+        "consistent": true
+      }
+    }],
     "import/no-extraneous-dependencies": "off",
-    "react/jsx-tag-spacing": "off",
+    "import/no-cycle": "off",
+    "react/static-property-placement": "off",
+    "react/jsx-indent-props": ["error", 4],
+    "react/jsx-tag-spacing": ["error", {
+      "beforeSelfClosing": "never",
+      "beforeClosing": "never"
+    }],
     "react/jsx-indent": "off",
-    "react/jsx-indent-props": "off",
-    "jsx-a11y/no-static-element-interactions": "off",
     "react/no-danger": "off",
     "jsx-a11y/no-noninteractive-element-interactions": "off",
-    "no-use-before-define": "off",
-    "react/prefer-stateless-function": "off"
+    "jsx-a11y/no-static-element-interactions": "off",
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/heading-has-content": "off",
+    "jsx-a11y/href-no-hash": "off"
   },
   "extends": "airbnb"
 }
