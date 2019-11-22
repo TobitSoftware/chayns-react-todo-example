@@ -29,7 +29,7 @@ class Todo extends PureComponent {
     handleRemoveTodo = () => {
         const { todo, removeTodo } = this.props;
 
-        removeTodo(todo.get('id'));
+        removeTodo(todo.id);
     };
 
     render() {
