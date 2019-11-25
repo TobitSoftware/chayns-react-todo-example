@@ -21,6 +21,7 @@
       "ignorePropertyModificationsFor": ["draftState"]
     }],
     "indent": ["error", 4, { "SwitchCase": 1 }],
+    "linebreak-style": ["error", "windows"],
     "no-plusplus": "off",
     "strict": "off",
     "object-curly-newline": ["error", {
