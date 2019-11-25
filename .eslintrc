@@ -20,7 +20,7 @@
       "props": true,
       "ignorePropertyModificationsFor": ["draftState"]
     }],
-    "indent": ["error", 4],
+    "indent": ["error", 4, { "SwitchCase": 1 }],
     "no-plusplus": "off",
     "strict": "off",
     "object-curly-newline": ["error", {
