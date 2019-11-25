@@ -1,4 +1,4 @@
-const getMonthName = (month) => ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'][month];
+const getMonthName = (month) => 'Januar,Februar,März,April,Mai,Juni,Juli,August,September,Oktober,November,Dezember'.split(',')[month];
 
 export default function formatDateMonthYearHoursMinutes(ts) {
     if (!ts) {
