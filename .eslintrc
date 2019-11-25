@@ -18,12 +18,10 @@
     "arrow-parens": ["error", "always"],
     "no-param-reassign": ["error", {
       "props": true,
-      "ignorePropertyModificationsFor": ["draft"]
+      "ignorePropertyModificationsFor": ["draftState"]
     }],
-    "linebreak-style": "off",
+    "indent": ["error", 4],
     "no-plusplus": "off",
-    "max-len": "off",
-    "indent": "off",
     "strict": "off",
     "object-curly-newline": ["error", {
       "ObjectExpression": {
@@ -36,14 +34,15 @@
       }
     }],
     "import/no-extraneous-dependencies": "off",
+    "import/prefer-default-export": "off",
     "import/no-cycle": "off",
-    "react/static-property-placement": "off",
+    "react/static-property-placement": ["error", "property assignment"],
     "react/jsx-indent-props": ["error", 4],
     "react/jsx-tag-spacing": ["error", {
       "beforeSelfClosing": "never",
       "beforeClosing": "never"
     }],
-    "react/jsx-indent": "off",
+    "react/jsx-indent": ["error", 4],
     "react/no-danger": "off",
     "jsx-a11y/no-noninteractive-element-interactions": "off",
     "jsx-a11y/no-static-element-interactions": "off",
