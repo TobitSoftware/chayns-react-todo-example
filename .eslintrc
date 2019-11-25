@@ -22,6 +22,10 @@
     }],
     "indent": ["error", 4, { "SwitchCase": 1 }],
     "linebreak-style": ["error", "windows"],
+    "max-len": ["error", {
+      "code": 150,
+      "ignorePattern": true
+    }],
     "no-plusplus": "off",
     "strict": "off",
     "object-curly-newline": ["error", {
