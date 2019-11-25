@@ -10,7 +10,7 @@ import Icon from 'chayns-components/lib/react-chayns-icon/component/Icon';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 // Utils
-import formatDateMonthYearHoursMinutes from '../../../utils/date-helper';
+import formatDateMonthYearHoursMinutes from '../../../utils/date';
 
 // Shapes
 import { TODO_SHAPE } from '../../../constants/shapes';

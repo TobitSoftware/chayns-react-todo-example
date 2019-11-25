@@ -1,12 +1,13 @@
 import React, { PureComponent } from 'react';
 
 // Api functions
-import { getTodosFromLocalStorage, postTodosToLocalStorage } from '../../api/todos';
 
 // Components
 import TodosHeadline from './todos-headline/TodosHeadline';
 import AddTodo from '../add-todo/AddTodo';
 import Todo from './todo/Todo';
+import { getTodosFromLocalStorage } from '../../api/todos/get';
+import { postTodosToLocalStorage } from '../../api/todos/post';
 
 // We use PureComponent instead of Component because it handles the shouldComponentUpdate method for us.
 // If we want to define our own shouldComponentUpdate logic we have to use Component instead of PureComponent.
