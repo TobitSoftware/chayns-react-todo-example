@@ -5,6 +5,10 @@
     ["@babel/plugin-proposal-class-properties", { "loose" : true }],
     "@babel/plugin-transform-runtime",
     ["transform-imports", {
+      "chayns-components": {
+        "transform": "../chayns-components/lib/utils/babel/resolveAbsoluteImport.js",
+        "preventFullImport": true
+      },
       "@fortawesome/free-brands-svg-icons": {
         "transform": "@fortawesome/free-brands-svg-icons/${member}",
         "skipDefaultConversion": true,
