@@ -55,7 +55,6 @@
     "@fortawesome/free-regular-svg-icons": "^5.11.2",
     "@fortawesome/free-solid-svg-icons": "^5.11.2",
     "chayns-components": "^4.12.29",
-    "date-fns": "^2.8.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
   },
