@@ -6,6 +6,8 @@ chayns® React example
 This project is an example for how u can use chayns® + [React][4]. <br>
 It's a simple ToDo-List where u can add, check/uncheck and remove ToDos. The ToDos will be saved in the localstorage.
 
+> :exclamation: This is just an example project. Don't use it as a basis to build your new project. Use the [template][5] to do this and follow the instructions in the readme.
+
 Development
 -------------
 1. Install all project dependencies with  `npm i`
@@ -34,3 +36,4 @@ You can also build this project with sourceMaps for testing via `npm run build:s
  [2]: https://github.com/TobitSoftware/chayns-guides/blob/master/TobitReactJsxStyleGuide.md
  [3]: https://chayns.net
  [4]: https://reactjs.org/
+ [5]: https://github.com/TobitSoftware/chayns-react-template
