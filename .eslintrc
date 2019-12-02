@@ -37,6 +37,9 @@
     }],
     "import/no-extraneous-dependencies": "off",
     "import/prefer-default-export": "off",
+    "import/no-unresolved": ["error", {
+      "ignore": ["chayns-components"]
+    }],
     "import/no-cycle": "off",
     "react/static-property-placement": ["error", "property assignment"],
     "react/jsx-indent-props": ["error", 4],
@@ -50,6 +53,8 @@
     "jsx-a11y/no-static-element-interactions": "off",
     "jsx-a11y/click-events-have-key-events": "off",
     "jsx-a11y/heading-has-content": "off",
+    "jsx-a11y/anchor-has-content": "off",
+    "jsx-a11y/anchor-is-valid": "off",
     "jsx-a11y/href-no-hash": "off"
   },
   "extends": "airbnb"
