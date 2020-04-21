@@ -3,7 +3,7 @@
 
 chayns® React example
 ===================
-This project is an example for how u can use chayns® + [React][4]. <br>
+This project is an example for how you can use chayns® + [React][4]. <br>
 It's a simple ToDo-List where u can add, check/uncheck and remove ToDos. The ToDos will be saved in the localstorage.
 
 > :exclamation: This is just an example project. Don't use it as a basis to build your new project. Use the [template][5] to do this and follow the instructions in the readme.
