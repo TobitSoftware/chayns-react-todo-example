@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 // chayns components
-import { Checkbox, Icon, Tooltip } from 'chayns-components';
+import { Checkbox, Icon, Tooltip } from 'chayns-components/lib';
 
 // Icons
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
