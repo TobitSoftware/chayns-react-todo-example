@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 // chayns components
-import { Button, Input } from 'chayns-components';
+import { Button, Input } from 'chayns-components/lib';
 
 // Styles
 import './add-todo.scss';
